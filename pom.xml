@@ -63,7 +63,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.3.7.RELEASE</version>
                 <configuration>
-                    <mainClass>com.ziuch.blog.api.BlogApiApplication</mainClass>
+                    <mainClass>com.ziuch.blog.api.config.BlogApiApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
