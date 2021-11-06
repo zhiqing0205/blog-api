@@ -1,4 +1,4 @@
-GET http://localhost:9000/ebook/list
-Accept: application/json
+GET http://localhost:9000/ebook/list?name=Vue
+#Accept: application/json
 
 ###
