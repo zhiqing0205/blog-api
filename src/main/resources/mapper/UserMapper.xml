@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ziuch.blog.api.mapper.UserMapper" >
+
+    <select id="list" resultType="com.ziuch.blog.api.domain.User">
+        select `id`, `login_name`, `name`, `password` from `user`
+    </select>
+
+</mapper>

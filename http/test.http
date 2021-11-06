@@ -19,3 +19,8 @@ Content-Type: application/x-www-form-urlencoded
 name=ziuch
 
 ###
+
+GET http://localhost:9000/testApi/user/list
+Accept: application/json
+
+###
