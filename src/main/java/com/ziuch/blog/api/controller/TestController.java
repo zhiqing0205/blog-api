@@ -1,6 +1,5 @@
 package com.ziuch.blog.api.controller;
 
-import com.ziuch.blog.api.domain.User;
 import com.ziuch.blog.api.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @RestController
 @RequestMapping("/testApi")
@@ -31,8 +29,8 @@ public class TestController {
         return "hello world, post: " + name;
     }
 
-    @GetMapping("/user/list")
-    public List<User> list() {
-        return userService.list();
-    }
+//    @GetMapping("/user/list")
+//    public List<User> list() {
+//        return userService.list();
+//    }
 }
