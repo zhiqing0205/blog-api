@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
-@ComponentScan({"com.ziuch", })
+@ComponentScan("com.ziuch.*")
 @SpringBootApplication
 @MapperScan("com.ziuch.blog.api.mapper")
 public class BlogApiApplication {
