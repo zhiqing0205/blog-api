@@ -7,6 +7,7 @@ import com.ziuch.blog.api.domain.EbookExample;
 import com.ziuch.blog.api.mapper.EbookMapper;
 import com.ziuch.blog.api.req.EbookReq;
 import com.ziuch.blog.api.resp.EbookResp;
+import com.ziuch.blog.api.resp.PageResp;
 import com.ziuch.blog.api.util.CopyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,7 @@ public class EbookService {
 
     private static final Logger LOG = LoggerFactory.getLogger(EbookService.class);
 
-    public List<EbookResp> list(EbookReq req){
+    public PageResp<EbookResp> list(EbookReq req){
 
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
@@ -32,7 +33,7 @@ public class EbookService {
         if(!ObjectUtils.isEmpty(req.getName()))
             criteria.andNameLike("%" + req.getName() + "%");
 
-        PageHelper.startPage(1, 3);
+        PageHelper.startPage(req.getPage(), req.getSize());
         List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
 
         PageInfo<Ebook> info = new PageInfo<>(ebookList);
@@ -50,7 +51,11 @@ public class EbookService {
 //        }
 
         //列表copy
+        List<EbookResp> list = CopyUtil.copyList(ebookList, EbookResp.class);
 
-        return CopyUtil.copyList(ebookList, EbookResp.class);
+        PageResp<EbookResp>  pageResp = new PageResp();
+        pageResp.setTotal(info.getTotal());
+        pageResp.setList(list);
+        return pageResp;
     }
 }
