@@ -1,4 +1,6 @@
-GET http://localhost:9000/ebook/list?page=1&size=2
+GET http://localhost:9000/ebook/list?page=3&size=2
 #Accept: application/json
 
 ###
+
+DELETE http://localhost:9000/ebook/delete/6
