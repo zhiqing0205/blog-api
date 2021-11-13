@@ -5,8 +5,9 @@ import com.github.pagehelper.PageInfo;
 import com.ziuch.blog.api.domain.Ebook;
 import com.ziuch.blog.api.domain.EbookExample;
 import com.ziuch.blog.api.mapper.EbookMapper;
-import com.ziuch.blog.api.req.EbookReq;
-import com.ziuch.blog.api.resp.EbookResp;
+import com.ziuch.blog.api.req.EbookQueryReq;
+import com.ziuch.blog.api.req.EbookSaveReq;
+import com.ziuch.blog.api.resp.EbookQueryResp;
 import com.ziuch.blog.api.resp.PageResp;
 import com.ziuch.blog.api.util.CopyUtil;
 import org.slf4j.Logger;
@@ -25,7 +26,7 @@ public class EbookService {
 
     private static final Logger LOG = LoggerFactory.getLogger(EbookService.class);
 
-    public PageResp<EbookResp> list(EbookReq req){
+    public PageResp<EbookQueryResp> list(EbookQueryReq req){
 
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
@@ -51,11 +52,22 @@ public class EbookService {
 //        }
 
         //列表copy
-        List<EbookResp> list = CopyUtil.copyList(ebookList, EbookResp.class);
+        List<EbookQueryResp> list = CopyUtil.copyList(ebookList, EbookQueryResp.class);
 
-        PageResp<EbookResp>  pageResp = new PageResp();
+        PageResp<EbookQueryResp>  pageResp = new PageResp();
         pageResp.setTotal(info.getTotal());
         pageResp.setList(list);
         return pageResp;
+    }
+
+    public void save(EbookSaveReq req) {
+        Ebook ebook = CopyUtil.copy(req, Ebook.class);
+
+        if(ObjectUtils.isEmpty(req.getId())) {
+
+        }
+        else {
+            ebookMapper.updateByPrimaryKey(ebook);
+        }
     }
 }
