@@ -1,8 +1,11 @@
 package com.ziuch.blog.api.req;
 
+import javax.validation.constraints.NotNull;
+
 public class CategorySaveReq extends PageReq{
     private Long id;
 
+    @NotNull(message = "【父分类】不能为空")
     private Long parent;
 
     private String name;
