@@ -6,6 +6,7 @@ import com.ziuch.blog.api.resp.CommonResp;
 import com.ziuch.blog.api.resp.EbookQueryResp;
 import com.ziuch.blog.api.resp.PageResp;
 import com.ziuch.blog.api.service.EbookService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -13,12 +14,14 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/ebook")
+@Api(value = "测试接口", tags = "用户管理相关的接口")
 public class EbookController {
 
     @Resource
     private EbookService ebookService;
 
     @GetMapping("/list")
+
     public CommonResp list(@Valid EbookQueryReq req){
         CommonResp<PageResp<EbookQueryResp>> resp = new CommonResp<>();
         PageResp<EbookQueryResp> list = ebookService.list(req);
