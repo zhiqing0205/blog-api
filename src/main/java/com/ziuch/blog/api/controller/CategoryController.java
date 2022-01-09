@@ -6,6 +6,7 @@ import com.ziuch.blog.api.resp.CategoryQueryResp;
 import com.ziuch.blog.api.resp.CommonResp;
 import com.ziuch.blog.api.resp.PageResp;
 import com.ziuch.blog.api.service.CategoryService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/category")
+@Api(value = "测试接口", tags = "分类管理相关的接口")
 public class CategoryController {
 
     @Resource

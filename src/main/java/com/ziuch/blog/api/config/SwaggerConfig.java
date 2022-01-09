@@ -62,7 +62,7 @@ public class SwaggerConfig {
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Swagger测试项目 RESTful APIs")
+                .title("Blog by ziuch RESTFUL APIs")
                 .version("1.0")
                 .build();
     }

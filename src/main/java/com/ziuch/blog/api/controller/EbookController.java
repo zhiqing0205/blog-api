@@ -14,7 +14,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/ebook")
-@Api(value = "测试接口", tags = "用户管理相关的接口")
+@Api(value = "测试接口", tags = "电子书管理相关的接口")
 public class EbookController {
 
     @Resource
