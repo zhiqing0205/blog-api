@@ -52,4 +52,12 @@ public class DocController {
         docService.delete(list);
         return resp;
     }
+
+    @GetMapping("/content/{id}")
+    public CommonResp content(@PathVariable Long id){
+        CommonResp<String> resp = new CommonResp<>();
+        String content = docService.content(id);
+        resp.setContent(content);
+        return resp;
+    }
 }
