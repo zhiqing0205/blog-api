@@ -174,7 +174,7 @@ public class DocExample {
             return (Criteria) this;
         }
 
-        public Criteria andEbookIdEqualTo(Long value) {
+        public Criteria andEbookIdEqualTo(String value) {
             addCriterion("ebook_id =", value, "ebookId");
             return (Criteria) this;
         }

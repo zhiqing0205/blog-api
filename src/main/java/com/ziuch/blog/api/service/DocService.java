@@ -35,10 +35,14 @@ public class DocService {
 
     private static final Logger LOG = LoggerFactory.getLogger(DocService.class);
 
-    public List<DocQueryResp> all(){
+    public List<DocQueryResp> all(String ebookId){
 
         DocExample docExample = new DocExample();
         docExample.setOrderByClause("sort asc");
+
+        DocExample.Criteria criteria = docExample.createCriteria();
+        criteria.andEbookIdEqualTo(ebookId);
+
         List<Doc> docList = docMapper.selectByExample(docExample);
 
         //列表copy
