@@ -1,6 +1,7 @@
 package com.ziuch.blog.api.req;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class EbookSaveReq extends PageReq{
     private Long id;
@@ -8,8 +9,10 @@ public class EbookSaveReq extends PageReq{
     @NotBlank(message = "【名称】不能为空")
     private String name;
 
+    @NotNull(message = "【分类】不能为空")
     private Long category1Id;
 
+    @NotNull(message = "【分类】不能为空")
     private Long category2Id;
 
     private String description;
