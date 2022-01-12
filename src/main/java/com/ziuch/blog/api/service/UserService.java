@@ -4,11 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ziuch.blog.api.domain.User;
 import com.ziuch.blog.api.domain.UserExample;
+import com.ziuch.blog.api.exception.BusinessException;
+import com.ziuch.blog.api.exception.BusinessExceptionCode;
 import com.ziuch.blog.api.mapper.UserMapper;
 import com.ziuch.blog.api.req.UserQueryReq;
 import com.ziuch.blog.api.req.UserSaveReq;
-import com.ziuch.blog.api.resp.UserQueryResp;
 import com.ziuch.blog.api.resp.PageResp;
+import com.ziuch.blog.api.resp.UserQueryResp;
 import com.ziuch.blog.api.util.CopyUtil;
 import com.ziuch.blog.api.util.SnowFlake;
 import org.slf4j.Logger;
@@ -68,8 +70,14 @@ public class UserService {
         User user = CopyUtil.copy(req, User.class);
 
         if(ObjectUtils.isEmpty(req.getId())) {
-            user.setId(snowFlake.nextId());
-            userMapper.insert(user);
+
+            User userDB = selectByLoginName(req.getLoginName());
+            if(ObjectUtils.isEmpty(userDB)) {
+                user.setId(snowFlake.nextId());
+                userMapper.insert(user);
+            } else {
+                throw new BusinessException(BusinessExceptionCode.USER_LOGIN_NAME_EXIST);
+            }
         }
         else {
             userMapper.updateByPrimaryKey(user);
@@ -78,5 +86,17 @@ public class UserService {
 
     public void delete(Long id){
         userMapper.deleteByPrimaryKey(id);
+    }
+
+    public User selectByLoginName(String LoginName){
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+        criteria.andLoginNameEqualTo(LoginName);
+
+        List<User> list = userMapper.selectByExample(userExample);
+        if(ObjectUtils.isEmpty(list)){
+            return null;
+        }
+        return list.get(0);
     }
 }
