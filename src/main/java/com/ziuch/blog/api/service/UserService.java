@@ -74,13 +74,15 @@ public class UserService {
             User userDB = selectByLoginName(req.getLoginName());
             if(ObjectUtils.isEmpty(userDB)) {
                 user.setId(snowFlake.nextId());
+
                 userMapper.insert(user);
             } else {
                 throw new BusinessException(BusinessExceptionCode.USER_LOGIN_NAME_EXIST);
             }
         }
         else {
-            userMapper.updateByPrimaryKey(user);
+            user.setLoginName(null);
+            userMapper.updateByPrimaryKeySelective(user);
         }
     }
 
