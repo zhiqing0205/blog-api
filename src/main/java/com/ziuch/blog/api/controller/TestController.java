@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/testApi")
 public class TestController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TestController.class);
 
     @Resource
     private RedisTemplate<String, String> redis;

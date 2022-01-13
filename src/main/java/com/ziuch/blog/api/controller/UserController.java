@@ -36,7 +36,7 @@ public class UserController {
     @Resource
     private RedisTemplate<String, String> redis;
 
-    private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/list")
 
