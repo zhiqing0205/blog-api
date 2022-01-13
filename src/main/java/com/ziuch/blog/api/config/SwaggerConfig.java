@@ -20,15 +20,15 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("com.ziuch.blog.api"))
                 .paths(PathSelectors.any())
                 .build()
-                .groupName("desertsGroup")
+                .groupName("CH")
                 .enable(true);
     }
 
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-                .title("Swagger3测试文档")
-                .description("文档描述信息")
-                .contact(new Contact("deserts", "#", "2569509245@qq.com"))
+                .title("Blog By ziuch")
+                .description("Blog By ziuch api文档")
+                .contact(new Contact("ziuch", "https://www.ziuch.cn", "1775840762@qq.com"))
                 .version("1.0")
                 .build();
     }
