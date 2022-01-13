@@ -118,13 +118,12 @@ public class UserService {
             throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
         } else {
             if(req.getPassword().equals(userDB.getPassword())) {
-                Long token = snowFlake.nextId();
-                UserLoginResp userLoginResp = CopyUtil.copy(req, UserLoginResp.class);
+                UserLoginResp userLoginResp = CopyUtil.copy(userDB, UserLoginResp.class);
+                return userLoginResp;
             } else {
                 LOG.info("{} 密码错误！输入密码：{} 数据库密码：{}", req.getLoginName(), req.getPassword(), userDB.getPassword());
                 throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
             }
         }
-        return null;
     }
 }
