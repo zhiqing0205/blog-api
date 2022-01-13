@@ -1,5 +1,6 @@
 package com.ziuch.blog.api.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ziuch.blog.api.req.UserLoginReq;
 import com.ziuch.blog.api.req.UserQueryReq;
 import com.ziuch.blog.api.req.UserResetPasswordReq;
@@ -9,12 +10,17 @@ import com.ziuch.blog.api.resp.PageResp;
 import com.ziuch.blog.api.resp.UserLoginResp;
 import com.ziuch.blog.api.resp.UserQueryResp;
 import com.ziuch.blog.api.service.UserService;
+import com.ziuch.blog.api.util.SnowFlake;
 import io.swagger.annotations.Api;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/user")
@@ -23,6 +29,14 @@ public class UserController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private SnowFlake snowFlake;
+
+    @Resource
+    private RedisTemplate<String, String> redis;
+
+    private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 
     @GetMapping("/list")
 
@@ -59,8 +73,14 @@ public class UserController {
     @PostMapping("/login")
     public CommonResp<UserLoginResp> login(@Valid @RequestBody UserLoginReq req){
         req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
-        CommonResp<UserLoginResp> resp = new CommonResp<>();
+        CommonResp resp = new CommonResp<>();
         UserLoginResp user = userService.login(req);
+
+        Long token = snowFlake.nextId();
+        user.setToken(token.toString());
+        redis.opsForValue().set(token.toString(), JSONObject.toJSONString(user), 3600 * 24, TimeUnit.SECONDS);
+        LOG.info("{} 生成token：{}，并存放入redis中", user.getLoginName(), user.getToken());
+
         resp.setContent(user);
         return resp;
     }
