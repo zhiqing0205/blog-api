@@ -7,10 +7,12 @@ import com.ziuch.blog.api.domain.UserExample;
 import com.ziuch.blog.api.exception.BusinessException;
 import com.ziuch.blog.api.exception.BusinessExceptionCode;
 import com.ziuch.blog.api.mapper.UserMapper;
+import com.ziuch.blog.api.req.UserLoginReq;
 import com.ziuch.blog.api.req.UserQueryReq;
 import com.ziuch.blog.api.req.UserResetPasswordReq;
 import com.ziuch.blog.api.req.UserSaveReq;
 import com.ziuch.blog.api.resp.PageResp;
+import com.ziuch.blog.api.resp.UserLoginResp;
 import com.ziuch.blog.api.resp.UserQueryResp;
 import com.ziuch.blog.api.util.CopyUtil;
 import com.ziuch.blog.api.util.SnowFlake;
@@ -107,5 +109,22 @@ public class UserService {
     public void resetPassword(UserResetPasswordReq req) {
         User user = CopyUtil.copy(req, User.class);
         userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    public UserLoginResp login(UserLoginReq req) {
+        User userDB = selectByLoginName(req.getLoginName());
+        if(ObjectUtils.isEmpty(userDB)) {
+            LOG.info("{} 用户名不存在！", req.getLoginName());
+            throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
+        } else {
+            if(req.getPassword().equals(userDB.getPassword())) {
+                Long token = snowFlake.nextId();
+                UserLoginResp userLoginResp = CopyUtil.copy(req, UserLoginResp.class);
+            } else {
+                LOG.info("{} 密码错误！输入密码：{} 数据库密码：{}", req.getLoginName(), req.getPassword(), userDB.getPassword());
+                throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
+            }
+        }
+        return null;
     }
 }
