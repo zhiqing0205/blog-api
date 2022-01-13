@@ -1,6 +1,7 @@
 package com.ziuch.blog.api.controller;
 
 import com.ziuch.blog.api.req.UserQueryReq;
+import com.ziuch.blog.api.req.UserResetPasswordReq;
 import com.ziuch.blog.api.req.UserSaveReq;
 import com.ziuch.blog.api.resp.CommonResp;
 import com.ziuch.blog.api.resp.PageResp;
@@ -42,6 +43,14 @@ public class UserController {
     public CommonResp delete(@PathVariable Long id){
         CommonResp resp = new CommonResp<>();
         userService.delete(id);
+        return resp;
+    }
+
+    @PostMapping("/resetPassword")
+    public CommonResp resetPassword(@Valid @RequestBody UserResetPasswordReq req){
+        req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
+        CommonResp resp = new CommonResp<>();
+        userService.resetPassword(req);
         return resp;
     }
 }

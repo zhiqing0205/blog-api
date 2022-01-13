@@ -8,6 +8,7 @@ import com.ziuch.blog.api.exception.BusinessException;
 import com.ziuch.blog.api.exception.BusinessExceptionCode;
 import com.ziuch.blog.api.mapper.UserMapper;
 import com.ziuch.blog.api.req.UserQueryReq;
+import com.ziuch.blog.api.req.UserResetPasswordReq;
 import com.ziuch.blog.api.req.UserSaveReq;
 import com.ziuch.blog.api.resp.PageResp;
 import com.ziuch.blog.api.resp.UserQueryResp;
@@ -82,6 +83,7 @@ public class UserService {
         }
         else {
             user.setLoginName(null);
+            user.setPassword(null);
             userMapper.updateByPrimaryKeySelective(user);
         }
     }
@@ -100,5 +102,10 @@ public class UserService {
             return null;
         }
         return list.get(0);
+    }
+
+    public void resetPassword(UserResetPasswordReq req) {
+        User user = CopyUtil.copy(req, User.class);
+        userMapper.updateByPrimaryKeySelective(user);
     }
 }
