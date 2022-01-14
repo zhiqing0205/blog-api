@@ -44,7 +44,7 @@ public class TestController {
     }
 
     @GetMapping("/redisGet/{key}")
-    public String redisSet(@PathVariable String key){
+    public String redisGet(@PathVariable String key){
         Object object = redis.opsForValue().get(key);
         if(ObjectUtils.isEmpty(object)) {
             LOG.error("key: {} is empty!", key);
