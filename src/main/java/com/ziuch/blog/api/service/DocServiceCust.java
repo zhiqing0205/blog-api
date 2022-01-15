@@ -41,4 +41,8 @@ public class DocServiceCust {
         }
 
     }
+
+    public void updateEbookInfo(){
+        docMapperCust.updateEbookInfo();
+    }
 }

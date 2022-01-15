@@ -7,4 +7,6 @@ public interface DocMapperCust {
     void viewDoc(@Param("id") String id);
 
     void voteDoc(@Param("id") String id);
+
+    void updateEbookInfo();
 }

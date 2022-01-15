@@ -14,4 +14,9 @@
       vote_count = vote_count + 1
     where id = #{id}
   </update>
+
+  <update id="updateEbookInfo">
+    UPDATE ebook, (SELECT ebook_id as id, count(*) as doc_cnt, SUM(view_count) as view_sum, sum(vote_count) as vote_sum FROM doc GROUP BY ebook_id) as res
+    set ebook.doc_count = res.doc_cnt, ebook.view_count = res.view_sum, ebook.vote_count = res.vote_sum WHERE ebook.id = res.id;
+  </update>
 </mapper>
