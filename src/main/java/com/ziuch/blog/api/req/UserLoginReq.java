@@ -1,6 +1,7 @@
 package com.ziuch.blog.api.req;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 public class UserLoginReq {
 
@@ -8,6 +9,7 @@ public class UserLoginReq {
     private String loginName;
 
     @NotEmpty(message = "【密码】不能为空")
+    @Pattern(regexp = "^(?![0-9]+$)(?![a-z]+$)[0-9a-z]{32}$", message = "【密码】规则不对")
     private String password;
 
     public String getLoginName() {
