@@ -28,6 +28,9 @@ public class DocService {
     private DocMapper docMapper;
 
     @Resource
+    private DocServiceCust docCustService;
+
+    @Resource
     private ContentMapper contentMapper;
 
     @Resource
