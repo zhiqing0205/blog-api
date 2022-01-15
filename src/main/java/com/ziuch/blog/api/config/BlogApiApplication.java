@@ -7,12 +7,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import springfox.documentation.oas.annotations.EnableOpenApi;
 
 @EnableOpenApi
 @ComponentScan("com.ziuch.*")
 @SpringBootApplication
 @MapperScan("com.ziuch.blog.api.mapper")
+@EnableScheduling
 public class BlogApiApplication {
 
     private static final Logger LOG = LoggerFactory.getLogger(BlogApiApplication.class);
