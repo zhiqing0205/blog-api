@@ -6,6 +6,7 @@ import com.ziuch.blog.api.resp.CommonResp;
 import com.ziuch.blog.api.resp.DocQueryResp;
 import com.ziuch.blog.api.resp.PageResp;
 import com.ziuch.blog.api.service.DocService;
+import com.ziuch.blog.api.service.DocServiceCust;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,9 @@ public class DocController {
 
     @Resource
     private DocService docService;
+
+    @Resource
+    private DocServiceCust docServiceCust;
 
     @GetMapping("/all/{ebookId}")
     public CommonResp all(@PathVariable String ebookId){
@@ -58,6 +62,13 @@ public class DocController {
         CommonResp<String> resp = new CommonResp<>();
         String content = docService.content(id);
         resp.setContent(content);
+        return resp;
+    }
+
+    @GetMapping("/vote/{id}")
+    public CommonResp vote(@PathVariable Long id){
+        CommonResp<String> resp = new CommonResp<>();
+        docServiceCust.voteDoc(id.toString());
         return resp;
     }
 }
