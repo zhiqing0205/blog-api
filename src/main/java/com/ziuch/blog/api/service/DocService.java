@@ -91,6 +91,8 @@ public class DocService {
 
         if(ObjectUtils.isEmpty(req.getId())) {
             doc.setId(snowFlake.nextId());
+            doc.setViewCount(0);
+            doc.setVoteCount(0);
             docMapper.insert(doc);
 
             content.setId(doc.getId());
@@ -118,6 +120,7 @@ public class DocService {
 
     public String content(Long id){
         Content content = contentMapper.selectByPrimaryKey(id);
+        docCustService.viewDoc(id.toString());
         if(content == null){
             return "";
         }
