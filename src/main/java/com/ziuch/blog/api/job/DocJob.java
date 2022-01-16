@@ -4,6 +4,7 @@ import com.ziuch.blog.api.service.DocServiceCust;
 import com.ziuch.blog.api.util.SnowFlake;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +28,7 @@ public class DocJob {
     @Scheduled(cron = "0 0 */1 * * ?")
     public void cron() {
         // 增加日志流水号
-//        MDC.put("LOG_ID", String.valueOf(snowFlake.nextId()));
+        MDC.put("LOG_ID", String.valueOf(snowFlake.nextId()));
         LOG.info("更新电子书下的文档数据开始");
         long start = System.currentTimeMillis();
         docServiceCust.updateEbookInfo();
