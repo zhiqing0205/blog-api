@@ -1,11 +1,14 @@
 package com.ziuch.blog.api.service;
 
+import com.ziuch.blog.api.domain.Doc;
 import com.ziuch.blog.api.exception.BusinessException;
 import com.ziuch.blog.api.exception.BusinessExceptionCode;
+import com.ziuch.blog.api.mapper.DocMapper;
 import com.ziuch.blog.api.mapper.DocMapperCust;
 import com.ziuch.blog.api.util.RedisUtil;
 import com.ziuch.blog.api.util.RequestContext;
 import com.ziuch.blog.api.util.SnowFlake;
+import com.ziuch.blog.api.websocket.WebSocketServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,12 @@ public class DocServiceCust {
 
     @Resource
     private DocMapperCust docMapperCust;
+
+    @Resource
+    private DocMapper docMapper;
+
+    @Resource
+    private WebSocketServer webSocketServer;
 
     @Resource
     private RedisUtil redisUtil;
@@ -40,6 +49,8 @@ public class DocServiceCust {
             throw new BusinessException(BusinessExceptionCode.VOTE_REPEAT);
         }
 
+        Doc docDB = docMapper.selectByPrimaryKey(Long.valueOf(id));
+        webSocketServer.sendInfo("【" + docDB.getName() + "】被点赞!"+ id + "!" + docDB.getEbookId());
     }
 
     public void updateEbookInfo(){
