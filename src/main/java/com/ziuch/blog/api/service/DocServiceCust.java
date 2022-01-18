@@ -8,9 +8,9 @@ import com.ziuch.blog.api.mapper.DocMapperCust;
 import com.ziuch.blog.api.util.RedisUtil;
 import com.ziuch.blog.api.util.RequestContext;
 import com.ziuch.blog.api.util.SnowFlake;
-import com.ziuch.blog.api.websocket.WebSocketServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,7 +25,7 @@ public class DocServiceCust {
     private DocMapper docMapper;
 
     @Resource
-    private WebSocketServer webSocketServer;
+    private WsService wsService;
 
     @Resource
     private RedisUtil redisUtil;
@@ -50,7 +50,8 @@ public class DocServiceCust {
         }
 
         Doc docDB = docMapper.selectByPrimaryKey(Long.valueOf(id));
-        webSocketServer.sendInfo("【" + docDB.getName() + "】被点赞!"+ id + "!" + docDB.getEbookId());
+        String message = "【" + docDB.getName() + "】被点赞!"+ id + "!" + docDB.getEbookId();
+        wsService.sendInfo(message, MDC.get("LOG_ID"));
     }
 
     public void updateEbookInfo(){
